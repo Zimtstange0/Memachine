@@ -1,5 +1,12 @@
 
 # Quotes importieren (muss noch erstellt werden)
+# Imperator soll:
+    # - In: Path
+    # - Out: List with Quotes
+    # data: Alle Ingestoren 
+    # @Classmethod: Checken welcher Ingestor
+    # - Den richtigen Ingestor "aufrufen"
+    # - Eine Liste mit Quotes zurückgeben.
 
 class Ingestor():
     ingestors = [txt_ingestor]
@@ -11,13 +18,6 @@ class Ingestor():
                 return ingestor.parse(path)
 
 
-# Imperator soll:
-    # - In: Path
-    # - Out: List with Quotes
-    # data: Alle Ingestoren 
-    # @Classmethod: Checken welcher Ingestor
-    # - Den richtigen Ingestor "aufrufen"
-    # - Eine Liste mit Quotes zurückgeben.
 
 
 # Ingestor(ABC) - Architektur eines Ingestors
