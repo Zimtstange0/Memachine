@@ -2,37 +2,40 @@ import random
 import os
 import requests
 from flask import Flask, render_template, abort, request
+from QuoteEngine.ingestor import Ingestor 
+from MemeGenerator.MemeGenerator import MemeEngine
 
 # @TODO Import your Ingestor and MemeEngine classes
 
 app = Flask(__name__)
 
-meme = MemeEngine('./static')
-
+meme = MemeEngine('./static/')
+#meme = MemeEngine('./tmp')
 
 def setup():
     """ Load all resources """
 
-    quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
-                   './_data/DogQuotes/DogQuotesDOCX.docx',
-                   './_data/DogQuotes/DogQuotesPDF.pdf',
-                   './_data/DogQuotes/DogQuotesCSV.csv']
+    #quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
+    #               './_data/DogQuotes/DogQuotesDOCX.docx',
+    #               './_data/DogQuotes/DogQuotesPDF.pdf',
+    #               './_data/DogQuotes/DogQuotesCSV.csv']
+    quote_files = [r'C:\MT\00_Scripts\repos\udacity_course\Memachine\src\_data\DogQuotes\DogQuotesTXT.txt']
 
     # TODO: Use the Ingestor class to parse all files in the
     # quote_files variable
-    quotes = None
-
+    quotes = Ingestor.parse(quote_files[0])
+    
     images_path = "./_data/photos/dog/"
-
     # TODO: Use the pythons standard library os class to find all
     # images within the images images_path directory
-    imgs = None
+    imgs = []
+    for root, dirs, files in os.walk(images_path):
+        imgs = [os.path.join(root, name) for name in files]
 
     return quotes, imgs
 
-
 quotes, imgs = setup()
-
+print('BüüG')
 
 @app.route('/')
 def meme_rand():
@@ -42,10 +45,11 @@ def meme_rand():
     # Use the random python standard library class to:
     # 1. select a random image from imgs array
     # 2. select a random quote from the quotes array
-
-    img = None
-    quote = None
+    
+    img = random.choice(imgs)
+    quote = random.choice(quotes)
     path = meme.make_meme(img, quote.body, quote.author)
+    print('app_meme_path: ' + path)
     return render_template('meme.html', path=path)
 
 

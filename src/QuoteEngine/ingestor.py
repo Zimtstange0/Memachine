@@ -1,4 +1,6 @@
-
+from typing import List
+from QuoteEngine.txt_ingest import TextIngestor
+from QuoteEngine.quote_gen import Quote
 # Quotes importieren (muss noch erstellt werden)
 # Imperator soll:
     # - In: Path
@@ -9,10 +11,10 @@
     # - Eine Liste mit Quotes zurückgeben.
 
 class Ingestor():
-    ingestors = [txt_ingestor]
+    ingestors = [TextIngestor]
     
     @classmethod
-    def parse(cls, path: str) -> List[Quotes]:
+    def parse(cls, path: str) -> List[Quote]:
         for ingestor in cls.ingestors:
             if ingestor.can_ingest(path):  
                 return ingestor.parse(path)

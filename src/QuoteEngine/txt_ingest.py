@@ -1,4 +1,8 @@
-from ingestor_interface import IngestorInterface
+from typing import List
+from QuoteEngine.ingestor_interface import IngestorInterface
+from QuoteEngine.quote_gen import Quote
+import re
+
 # Ingestor
     # - In: string
     # - Out: List
@@ -9,11 +13,11 @@ from ingestor_interface import IngestorInterface
     # OUT: List with Quotes
 
 
-class ingest_txt(IngestorInterface):
+class TextIngestor(IngestorInterface):
     allowed_extensions = ['txt']
 
     @classmethod
-    def parse(cls, path: str) -> List[quotes]:
+    def parse(cls, path: str) -> List[Quote]:
         if not cls.can_ingest(path):
             raise Exception('cannot ingest exception')
         
@@ -21,8 +25,8 @@ class ingest_txt(IngestorInterface):
         with open(path) as f:
             lines = f.readlines()
             for line in lines:
-                
-            
-
+                # delete "ï»¿". Beginning of some ascii files
+                line = re.sub("ï»¿", "", line)
+                quotes.append(Quote(line))
 
         return quotes
