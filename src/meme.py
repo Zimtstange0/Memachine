@@ -1,5 +1,8 @@
 import os
 import random
+from QuoteEngine.ingestor import Ingestor 
+from QuoteEngine.quote_gen import Quote
+from MemeGenerator.MemeGenerator import MemeEngine
 
 # @TODO Import your Ingestor and MemeEngine classes
 
@@ -18,6 +21,8 @@ def generate_meme(path=None, body=None, author=None):
         img = random.choice(imgs)
     else:
         img = path[0]
+        #debug
+        img = path
 
     if body is None:
         quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
@@ -32,10 +37,13 @@ def generate_meme(path=None, body=None, author=None):
     else:
         if author is None:
             raise Exception('Author Required if Body is Used')
-        quote = QuoteModel(body, author)
+        #quote = QuoteModel(body, author)
+        line = body + ' - ' + author
+        quote_manual = Quote(line)
 
+    # km: tmp folder has to exist. Maybe I have to automatically create it.
     meme = MemeEngine('./tmp')
-    path = meme.make_meme(img, quote.body, quote.author)
+    path = meme.make_meme(img, quote_manual.body, quote_manual.author)
     return path
 
 
@@ -45,4 +53,7 @@ if __name__ == "__main__":
     # body - quote body to add to the image
     # author - quote author to add to the image
     args = None
+    
+    print(generate_meme(r'C:\MT\00_Scripts\repos\udacity_course\Memachine\src\_data\photos\dog\xander_1.jpg', 'My body is great', 'Author'))
+    print('debug')
     print(generate_meme(args.path, args.body, args.author))
