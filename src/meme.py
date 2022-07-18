@@ -54,6 +54,6 @@ if __name__ == "__main__":
     # author - quote author to add to the image
     args = None
     
-    print(generate_meme(r'C:\MT\00_Scripts\repos\udacity_course\Memachine\src\_data\photos\dog\xander_1.jpg', 'My body is great', 'Author'))
+    print(generate_meme('./_data/photos/dog/xander_1.jpg', 'My body is great', 'Author'))
     print('debug')
     print(generate_meme(args.path, args.body, args.author))
