@@ -1,3 +1,4 @@
+from genericpath import exists, isfile
 import os
 from re import A
 from turtle import reset
@@ -9,8 +10,10 @@ from flask import Flask, render_template, abort, request
 from QuoteEngine.ingestor import Ingestor 
 from MemeGenerator.MemeGenerator import MemeEngine
 
-app = Flask(__name__)
-meme = MemeEngine('./static')
+#app = Flask(__name__)
+app = Flask(__name__, static_folder='./outpic')
+#meme = MemeEngine('./static')  
+meme = MemeEngine('./outpic')   
 
 def setup():
     """ Load all resources """
@@ -21,17 +24,14 @@ def setup():
     #               './_data/DogQuotes/DogQuotesCSV.csv']
     quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt']
 
-    # TODO: Use the Ingestor class to parse all files in the
-    # quote_files variable
     quotes = Ingestor.parse(quote_files[0])
     
     if 'src' in os.getcwd():
         images_path = "./_data/photos/dog/"
     else:
-        images_path = "./src/_data/photos/dog/"    
+        images_path = r"./src/_data/photos/dog/"    
         
     # find all images within the images_path directory
-    
     imgs = []
     for root, dirs, files in os.walk(images_path):
         imgs = [os.path.join(root, name) for name in files]      
@@ -50,9 +50,15 @@ def meme_rand():
 
     # Generate MEME in path
     path = meme.make_meme(img, quote.body, quote.author)
-    print('app_meme_path: ' + path)
+    print('def meme_rand: ' + path)
 
     return render_template('meme.html', path=path)
+
+
+@app.route('/clean', methods=['GET'])
+def meme_clean():
+    """ Show page with delete Button """
+    return render_template('meme_clean.html')
 
 
 @app.route('/create', methods=['GET'])
@@ -64,11 +70,15 @@ def meme_form():
 @app.route('/create', methods=['POST'])
 def meme_post():
     """ Create a user defined meme """
-    img_url = request.form["image_url"]
+    
+    if request.form["pictures"] == "":
+        img_url = request.form["image_url"] 
+    else:
+        img_url = request.form["pictures"]
+        
     body = request.form["body"]
     author = request.form["author"]
     
-    # @TODO:
     # 1. Use requests to save the image from the image_url
     res = requests.get(img_url, stream = True)
 
@@ -88,3 +98,4 @@ def meme_post():
 
 if __name__ == "__main__":
     app.run()
+    #app.run(debug=True)

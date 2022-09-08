@@ -3,33 +3,25 @@
 {% block body %}
 <div class="card" style="width: 500px; max-width: 100%;">
     <div class="card-body">
-        <form action="{{url_for('meme_post')}}" method="POST">
-            <label> Select a URL by "Copy and Paste"</label>
-            <ul>
-                <li>https://miro.medium.com/max/1400/0*ZDJlPLVptaOCZlfr</li>
-                <li>https://assets.felicanis.be/wp-content/uploads/rhodesian-ridgeback-200x300.jpg</li>
-                <li>https://welpenknigge.de/wp-content/uploads/2018/11/Sechs-suesse-Rhodesian-Ridgeback-Welpen-678x381.jpg</li>
-            </ul>
-
-            <label for="cars">Choose a car:</label>
-            <select name="cars" id="cars">
+        <form action="{{url_for('meme_post')}}" method="POST">            
+            <label for="pictures">Choose a picture:</label>
+            <select name="pictures" id="pics">
+                <option value="">Select a picture</option>
                 <option value="https://miro.medium.com/max/1400/0*ZDJlPLVptaOCZlfr">Controller</option>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                <option value="https://assets.felicanis.be/wp-content/uploads/rhodesian-ridgeback-200x300.jpg">Richbag</option>
+                <option value="https://welpenknigge.de/wp-content/uploads/2018/11/Sechs-suesse-Rhodesian-Ridgeback-Welpen-678x381.jpg">Richbag Gang</option>
             </select> 
 
-            </div>
-            
-            <div class="form-group">
+            <div class="form-group">                
                 <label for="image_url">Image URL</label>
                 <input type="url" class="form-control" id="image_url" aria-describedby="image url" placeholder="Enter a url for an image" name="image_url">
             </div>
+
             <div class="form-group">
                 <label for="body">Quote Body</label>
                 <input type="text" class="form-control" id="body" aria-describedby="Quote Body" placeholder="To be or not to be" name="body">
             </div>
+
             <div class="form-group">
                 <label for="author">Quote Author</label>
                 <input type="text" class="form-control" id="author" aria-describedby="Quote Author" placeholder="Shakespeare" name="author">

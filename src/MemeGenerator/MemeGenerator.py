@@ -29,14 +29,14 @@ class MemeEngine():
 
         # get a font
         fnt = ImageFont.truetype('./MemeGenerator/fonts/LilitaOne-Regular.ttf', 35) 
-
+        
         # Add text and author
         draw.multiline_text((50, 10), text, font=fnt, fill=(100, 123, 200), stroke_width=4, stroke_fill='black')
         draw.multiline_text((60, 60), 'from: ' + author, font=fnt, fill=(200, 23, 100), stroke_width=4, stroke_fill='black')
 
         # save at ./temp
         path_to_img = self.out_path + '/' + filename
-        img_s.save(path_to_img)
+        img_s.save(path_to_img)    
         print(path_to_img)
 
         #return self.out_path
